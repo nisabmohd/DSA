@@ -1,0 +1,230 @@
+package Lists;
+
+import java.util.Iterator;
+
+public class DoubleLinkedList<T> implements Iterable<T> {
+
+    private class DoubleLinkedListNode<E> {
+        E val;
+        DoubleLinkedListNode<E> prev, next;
+
+        public DoubleLinkedListNode(E val) {
+            this.val = val;
+        }
+
+        public DoubleLinkedListNode(E val, DoubleLinkedListNode<E> prev, DoubleLinkedListNode<E> next) {
+            this.val = val;
+            this.next = next;
+            this.prev = prev;
+        }
+
+    }
+
+    public class DoubleLinkedListIterator<E> implements Iterator<E> {
+        private DoubleLinkedListNode node = DoubleLinkedList.this.head;
+
+        @Override
+        public boolean hasNext() {
+            return node != null;
+        }
+
+        @Override
+        public E next() {
+            var val = node.val;
+            node = node.next;
+            return (E) val;
+        }
+    }
+
+    public class DoubleLinkedListDescIterator<E> implements Iterator<E> {
+        private DoubleLinkedListNode node = DoubleLinkedList.this.tail;
+
+        @Override
+        public boolean hasNext() {
+            return node != null;
+        }
+
+        @Override
+        public E next() {
+            var val = node.val;
+            node = node.prev;
+            return (E) val;
+        }
+    }
+
+    @Override
+    public Iterator<T> iterator() {
+        return new DoubleLinkedListIterator<>();
+    }
+
+    public Iterator<T> descendingIterator() {
+        return new DoubleLinkedListDescIterator<>();
+    }
+
+    private DoubleLinkedListNode<T> head, tail;
+    private int size = 0;
+
+    public void add(T val) {
+        addLast(val);
+    }
+
+    private boolean isValidInsertIndex(int index) {
+        return index > 0 && index <= size;
+    }
+
+    private boolean isValidGetIndex(int index) {
+        return index > 0 && index < size;
+    }
+
+    private void add(int index, T val) {
+        if (!isValidInsertIndex(index)) return;
+        if (index == size) {
+            addLast(val);
+            return;
+        }
+        var node = head;
+        while (index - 1 > 0) {
+            node = node.next;
+            index--;
+        }
+        var next = node.next;
+        var newNode = new DoubleLinkedListNode<>(val, node, next);
+        node.next = newNode;
+        next.prev = newNode;
+        size++;
+    }
+
+    private void init(T val) {
+        var node = new DoubleLinkedListNode<>(val);
+        head = node;
+        tail = head;
+        size = 1;
+    }
+
+    public boolean isEmpty() {
+        return size == 0 && head == null && tail == null;
+    }
+
+    public void addFirst(T val) {
+        if (isEmpty()) {
+            init(val);
+            return;
+        }
+        var node = new DoubleLinkedListNode<>(val, null, head);
+        head.prev = node;
+        head = node;
+        size++;
+    }
+
+    public void addLast(T val) {
+        if (isEmpty()) {
+            init(val);
+            return;
+        }
+        var node = new DoubleLinkedListNode<>(val, tail, null);
+        tail.next = node;
+        size++;
+        tail = tail.next;
+    }
+
+    public void clear() {
+        head = null;
+        tail = null;
+        size = 0;
+    }
+
+    public T element() {
+        return getFirst();
+    }
+
+    public T getFirst() {
+        if (isEmpty()) return null;
+        return head.val;
+    }
+
+    public T getLast() {
+        if (isEmpty()) return null;
+        return tail.val;
+    }
+
+    public T get(int index) {
+        if (isEmpty() || !isValidGetIndex(index)) return null;
+        if (size - 1 == index) return getLast();
+        var temp = head;
+        for (int i = 0; i < index; i++) {
+            temp = temp.next;
+        }
+        return temp.val;
+    }
+
+    public int indexOf(T val) {
+        var temp = head;
+        int i = 0;
+        while (temp != null) {
+            if (temp.val.equals(val)) return i;
+            temp = temp.next;
+            i++;
+        }
+        return -1;
+    }
+
+    public int lastIndexOf(T val) {
+        var temp = head;
+        int i = 0;
+        int foundIndex = -1;
+        while (temp != null) {
+            if (temp.val.equals(val)) foundIndex = i;
+            temp = temp.next;
+            i++;
+        }
+        return foundIndex;
+    }
+
+    public T remove(int index) {
+        if (isEmpty() || !isValidGetIndex(index)) return null;
+        if (index == size - 1) return removeLast();
+        var temp = head;
+        for (int i = 0; i < index; i++) {
+            temp = temp.next;
+        }
+        var val = temp.val;
+        var prev = temp.prev;
+        var next = temp.next;
+        prev.next = next;
+        next.prev = prev;
+        size--;
+        return val;
+    }
+
+    public T removeFirst() {
+        if (isEmpty()) return null;
+        var val = head.val;
+        head = head.next;
+        head.prev = null;
+        size--;
+        return val;
+    }
+
+    public T removeLast() {
+        if (isEmpty()) return null;
+        var val = tail.val;
+        tail = tail.prev;
+        tail.next = null;
+        size--;
+        return val;
+    }
+
+    public void set(int index, T val) {
+        if (isEmpty() || !isValidGetIndex(index)) return;
+        var temp = head;
+        for (int i = 0; i < index; i++) {
+            temp = temp.next;
+        }
+        temp.val = val;
+    }
+
+    public int size() {
+        return this.size;
+    }
+
+}

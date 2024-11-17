@@ -1,2 +1,4 @@
-package Maps;public class TreeMap {
+package Maps;
+
+public class TreeMap {
 }

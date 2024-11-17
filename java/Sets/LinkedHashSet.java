@@ -1,2 +1,4 @@
-package Sets;public class LinkedHashSet {
+package Sets;
+
+public class LinkedHashSet {
 }

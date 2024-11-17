@@ -1,4 +1,4 @@
 package Sets;
 
-public interface Set<T>{
+public interface Sets<T>{
 }

@@ -1,2 +1,4 @@
-package Sets;public class TreeSet {
+package Sets;
+
+public class TreeSet {
 }

@@ -1,2 +1,4 @@
-package Sets;public class HashSet {
+package Sets;
+
+public class HashSet {
 }

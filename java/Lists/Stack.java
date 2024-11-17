@@ -23,6 +23,10 @@ public class Stack<E> {
         return list.size();
     }
 
+    public E peek() {
+        return list.getLast();
+    }
+
     public E pop() {
         return list.removeLast();
     }

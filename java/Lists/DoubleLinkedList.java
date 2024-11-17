@@ -2,7 +2,7 @@ package Lists;
 
 import java.util.Iterator;
 
-public class DoubleLinkedList<T> implements Iterable<T> {
+public class DoubleLinkedList<T> implements Iterable<T>, LinkedLists<T> {
 
     private class DoubleLinkedListNode<E> {
         E val;
@@ -64,6 +64,7 @@ public class DoubleLinkedList<T> implements Iterable<T> {
     private DoubleLinkedListNode<T> head, tail;
     private int size = 0;
 
+    @Override
     public void add(T val) {
         addLast(val);
     }
@@ -76,7 +77,8 @@ public class DoubleLinkedList<T> implements Iterable<T> {
         return index > 0 && index < size;
     }
 
-    private void add(int index, T val) {
+    @Override
+    public void add(int index, T val) {
         if (!isValidInsertIndex(index)) return;
         if (index == size) {
             addLast(val);
@@ -101,10 +103,12 @@ public class DoubleLinkedList<T> implements Iterable<T> {
         size = 1;
     }
 
+    @Override
     public boolean isEmpty() {
         return size == 0 && head == null && tail == null;
     }
 
+    @Override
     public void addFirst(T val) {
         if (isEmpty()) {
             init(val);
@@ -116,6 +120,7 @@ public class DoubleLinkedList<T> implements Iterable<T> {
         size++;
     }
 
+    @Override
     public void addLast(T val) {
         if (isEmpty()) {
             init(val);
@@ -127,26 +132,31 @@ public class DoubleLinkedList<T> implements Iterable<T> {
         tail = tail.next;
     }
 
+    @Override
     public void clear() {
         head = null;
         tail = null;
         size = 0;
     }
 
+    @Override
     public T element() {
         return getFirst();
     }
 
+    @Override
     public T getFirst() {
         if (isEmpty()) return null;
         return head.val;
     }
 
+    @Override
     public T getLast() {
         if (isEmpty()) return null;
         return tail.val;
     }
 
+    @Override
     public T get(int index) {
         if (isEmpty() || !isValidGetIndex(index)) return null;
         if (size - 1 == index) return getLast();
@@ -157,6 +167,7 @@ public class DoubleLinkedList<T> implements Iterable<T> {
         return temp.val;
     }
 
+    @Override
     public int indexOf(T val) {
         var temp = head;
         int i = 0;
@@ -168,6 +179,7 @@ public class DoubleLinkedList<T> implements Iterable<T> {
         return -1;
     }
 
+    @Override
     public int lastIndexOf(T val) {
         var temp = head;
         int i = 0;
@@ -180,6 +192,7 @@ public class DoubleLinkedList<T> implements Iterable<T> {
         return foundIndex;
     }
 
+    @Override
     public T remove(int index) {
         if (isEmpty() || !isValidGetIndex(index)) return null;
         if (index == size - 1) return removeLast();
@@ -196,6 +209,7 @@ public class DoubleLinkedList<T> implements Iterable<T> {
         return val;
     }
 
+    @Override
     public T removeFirst() {
         if (isEmpty()) return null;
         var val = head.val;
@@ -205,6 +219,7 @@ public class DoubleLinkedList<T> implements Iterable<T> {
         return val;
     }
 
+    @Override
     public T removeLast() {
         if (isEmpty()) return null;
         var val = tail.val;
@@ -214,6 +229,12 @@ public class DoubleLinkedList<T> implements Iterable<T> {
         return val;
     }
 
+    @Override
+    public T remove() {
+        return removeFirst();
+    }
+
+    @Override
     public void set(int index, T val) {
         if (isEmpty() || !isValidGetIndex(index)) return;
         var temp = head;
@@ -223,6 +244,7 @@ public class DoubleLinkedList<T> implements Iterable<T> {
         temp.val = val;
     }
 
+    @Override
     public int size() {
         return this.size;
     }

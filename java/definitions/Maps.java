@@ -1,4 +1,4 @@
-package Maps;
+package definitions;
 
 public interface Maps<K, V> {
     public void clear();

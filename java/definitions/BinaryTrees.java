@@ -1,8 +1,8 @@
-package Trees;
+package definitions;
 
 import java.util.*;
 
-public interface BinaryTree<T> {
+public interface BinaryTrees<T> {
     public static class Node<T> {
         T val;
         Node<T> left, right;

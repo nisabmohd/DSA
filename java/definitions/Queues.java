@@ -1,4 +1,4 @@
-package Queues;
+package definitions;
 
 public interface Queues<T> {
     public void add(T val);

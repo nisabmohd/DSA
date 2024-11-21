@@ -1,2 +1,4 @@
-package Trees;public class Heap {
+package Trees;
+
+public class Heap {
 }

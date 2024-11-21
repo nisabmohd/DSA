@@ -1,4 +1,4 @@
-package Lists;
+package definitions;
 
 public interface LinkedLists<T> {
     public void add(T val);

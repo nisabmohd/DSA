@@ -1,5 +1,7 @@
 package Maps;
 
+import definitions.Maps;
+
 public class HashMap<K, V> implements Maps<K, V> {
     @Override
     public void clear() {

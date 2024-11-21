@@ -1,6 +1,7 @@
 package Queues;
 
 import Lists.DoubleLinkedList;
+import definitions.Queues;
 
 public class Queue<T> implements Queues<T> {
 

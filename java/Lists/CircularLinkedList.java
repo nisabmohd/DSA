@@ -1,5 +1,7 @@
 package Lists;
 
+import definitions.LinkedLists;
+
 import java.util.Iterator;
 
 public class CircularLinkedList<T> implements Iterable<T>, LinkedLists<T> {

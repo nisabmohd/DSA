@@ -1,5 +1,7 @@
 package Lists;
 
+import definitions.LinkedLists;
+
 import java.util.Iterator;
 
 public class DoubleLinkedList<T> implements Iterable<T>, LinkedLists<T> {
@@ -97,8 +99,7 @@ public class DoubleLinkedList<T> implements Iterable<T>, LinkedLists<T> {
     }
 
     private void init(T val) {
-        var node = new DoubleLinkedListNode<>(val);
-        head = node;
+        head = new DoubleLinkedListNode<>(val);
         tail = head;
         size = 1;
     }

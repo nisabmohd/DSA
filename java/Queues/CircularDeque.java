@@ -5,18 +5,18 @@ public class CircularDeque<T> {
     private int size, front, rear, capacity;
 
     public CircularDeque(int capacity) {
-        this.arr = new Object[capacity];
+        this.arr = new Object[capacity + 1];
         this.capacity = capacity + 1;
         this.rear = 0;
         this.front = 0;
         this.size = 0;
     }
 
-    public boolean isFull() {
+    public boolean isEmpty() {
         return size == 0;
     }
 
-    public boolean isEmpty() {
+    public boolean isFull() {
         return size == capacity - 1;
     }
 
@@ -58,7 +58,8 @@ public class CircularDeque<T> {
 
     public T peekLast() {
         if (isEmpty()) return null;
-        return (T) arr[rear];
+        var index = (rear - 1 + capacity) % capacity;
+        return (T) arr[index];
     }
 
 }

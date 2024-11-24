@@ -2,6 +2,7 @@ package Maps;
 
 import definitions.Maps;
 
+// todo
 public class HashMap<K, V> implements Maps<K, V> {
     @Override
     public void clear() {

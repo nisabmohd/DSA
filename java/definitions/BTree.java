@@ -1,17 +1,12 @@
 package definitions;
 
-import java.util.*;
+public interface BTree {
+    public class BTreeNode<T> {
+        public T val;
+        public BTreeNode<T> left, right;
 
-public interface BTree<T> {
-    public static class Node<T> {
-        T val;
-        Node<T> left, right;
+        public BTreeNode(T val) {
+            this.val = val;
+        }
     }
-
-    public List<T> inOrder(Node<T> node);
-
-    public List<T> preOrder(Node<T> node);
-
-    public List<T> postOrder(Node<T> node);
-
 }

@@ -6,7 +6,7 @@ import java.util.Iterator;
 
 public class DoubleLinkedList<T> implements Iterable<T>, LinkedLists<T> {
 
-    private class DoubleLinkedListNode<E> {
+    public static class DoubleLinkedListNode<E> {
         E val;
         DoubleLinkedListNode<E> prev, next;
 

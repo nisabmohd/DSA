@@ -1,14 +1,16 @@
 package Queues;
 
+import definitions.Queues;
+
 import java.util.Arrays;
 
-public class CircularQueue<T> {
+public class CircularQueue<T> implements Queues<T> {
 
     private Object[] arr;
     private int front, rear, count;
 
-    public CircularQueue(int size) {
-        arr = new Object[size];
+    public CircularQueue(int capacity) {
+        arr = new Object[capacity];
         init();
     }
 
@@ -18,16 +20,24 @@ public class CircularQueue<T> {
         rear = -1;
     }
 
-    private boolean isEmpty() {
+    @Override
+    public boolean isEmpty() {
         return front == -1 && rear == -1;
+    }
+
+    @Override
+    public void clear() {
+        Arrays.fill(arr, null);
+        count = 0;
     }
 
     private boolean isFull() {
         return (rear + 1) % arr.length == front;
     }
 
-    public boolean add(T val) {
-        if (isFull()) return false;
+    @Override
+    public void add(T val) {
+        if (isFull()) return;
         if (isEmpty()) {
             front = 0;
             rear = 0;
@@ -36,9 +46,9 @@ public class CircularQueue<T> {
         }
         arr[rear] = val;
         count++;
-        return true;
     }
 
+    @Override
     public T remove() {
         if (isEmpty()) return null;
         var val = (T) arr[front];
@@ -49,9 +59,14 @@ public class CircularQueue<T> {
         return val;
     }
 
-
-    public int count() {
+    @Override
+    public int size() {
         return count;
+    }
+
+    @Override
+    public T peek() {
+        return (T) arr[front];
     }
 
     @Override

@@ -2,7 +2,7 @@ package definitions;
 
 import java.util.*;
 
-public interface BinaryTrees<T> {
+public interface BTree<T> {
     public static class Node<T> {
         T val;
         Node<T> left, right;

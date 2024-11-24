@@ -7,7 +7,9 @@ public interface Queues<T> {
 
     public int size();
 
-    public T peek();
+    default public T peek() {
+        throw new Error("Method not implemeted");
+    }
 
     public boolean isEmpty();
 

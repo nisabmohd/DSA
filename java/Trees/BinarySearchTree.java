@@ -1,8 +1,10 @@
 package Trees;
 
+import java.util.*;
+
 import definitions.BTree;
 
-public class BinarySearchTree<T extends Comparable<T>> {
+public class BinarySearchTree<T extends Comparable<T>> extends BinaryTree<T> {
     private BTree.BTreeNode<T> root;
     private int size;
 
@@ -86,5 +88,34 @@ public class BinarySearchTree<T extends Comparable<T>> {
         size = 0;
         root = null;
     }
+
+    public List<T> inOrder() {
+        return super.inOrder(root);
+    }
+
+    public List<T> preOrder() {
+        return super.preOrder(root);
+    }
+
+    public List<T> postOrder() {
+        return super.postOrder(root);
+    }
+
+    public List<List<T>> levelOrder() {
+        return super.levelOrder(root);
+    }
+
+    public int height() {
+        return super.height(root);
+    }
+
+    public List<T> rightView() {
+        return super.rightView(root);
+    }
+
+    public List<T> leftView() {
+        return super.leftView(root);
+    }
+
 }
 

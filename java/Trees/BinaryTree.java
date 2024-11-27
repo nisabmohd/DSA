@@ -51,8 +51,40 @@ public class BinaryTree<T> {
         levelOrderHelper(node.right, map, level + 1);
     }
 
+
+    protected List<T> leftView(BTree.BTreeNode<T> node) {
+        var map = new LinkedHashMap<Integer, T>();
+        leftViewHelper(node, map, 0);
+        return map.values().stream().toList();
+    }
+
+    private void leftViewHelper(BTree.BTreeNode<T> node, Map<Integer, T> map, int level) {
+        if (node == null) return;
+        map.putIfAbsent(level, node.val);
+        leftViewHelper(node.left, map, level + 1);
+        leftViewHelper(node.right, map, level + 1);
+    }
+
+    protected List<T> rightView(BTree.BTreeNode<T> node) {
+        var map = new LinkedHashMap<Integer, T>();
+        rightViewHelper(node, map, 0);
+        return map.values().stream().toList();
+    }
+
+    private void rightViewHelper(BTree.BTreeNode<T> node, Map<Integer, T> map, int level) {
+        if (node == null) return;
+        map.put(level, node.val);
+        rightViewHelper(node.left, map, level + 1);
+        rightViewHelper(node.right, map, level + 1);
+    }
+
+    public int height(BTree.BTreeNode<T> node) {
+        if (node == null) return 0;
+        return Math.max(height(node.left), height(node.right)) + 1;
+    }
+
     //   todo
-    //   height,levelOrderArray, leftview,rightview,topview,bottomview
+    //  levelOrderArray,topview,bottomview
 
 
     public static void main(String[] args) {

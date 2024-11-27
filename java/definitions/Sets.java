@@ -9,7 +9,7 @@ public interface Sets<T> {
 
     public boolean isEmpty();
 
-    public T remove(T val);
+    public void remove(T val);
 
     public int size();
 }

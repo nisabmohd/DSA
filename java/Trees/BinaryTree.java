@@ -1,11 +1,9 @@
 package Trees;
 
+import com.sun.source.tree.Tree;
 import definitions.BTree;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class BinaryTree<T> {
 
@@ -78,13 +76,66 @@ public class BinaryTree<T> {
         rightViewHelper(node.right, map, level + 1);
     }
 
-    public int height(BTree.BTreeNode<T> node) {
+    protected int height(BTree.BTreeNode<T> node) {
         if (node == null) return 0;
         return Math.max(height(node.left), height(node.right)) + 1;
     }
 
-    //   todo
-    //  levelOrderArray,topview,bottomview
+    protected List<T> topView(BTree.BTreeNode<T> node) {
+        var map = new TreeMap<Integer, T>();
+        topViewHelper(node, map, 0);
+        return map.values().stream().toList();
+    }
+
+    private void topViewHelper(BTree.BTreeNode<T> node, TreeMap<Integer, T> map, int scale) {
+        if (node == null) return;
+        map.putIfAbsent(scale, node.val);
+        topViewHelper(node.left, map, scale - 1);
+        topViewHelper(node.right, map, scale + 1);
+    }
+
+    protected List<T> bottomView(BTree.BTreeNode<T> node) {
+        var map = new TreeMap<Integer, T>();
+        bottomViewHelper(node, map, 0);
+        return map.values().stream().toList();
+    }
+
+    private void bottomViewHelper(BTree.BTreeNode<T> node, TreeMap<Integer, T> map, int scale) {
+        if (node == null) return;
+        map.put(scale, node.val);
+        bottomViewHelper(node.left, map, scale - 1);
+        bottomViewHelper(node.right, map, scale + 1);
+    }
+
+    protected List<T> levelOrderArray(BTree.BTreeNode<T> node) {
+        List<T> ans = new ArrayList<>();
+        if (node == null) return ans;
+        Queue<BTree.BTreeNode<T>> q = new LinkedList<>();
+        q.add(node);
+        while (!q.isEmpty()) {
+            var elementNode = q.remove();
+            ans.add(elementNode.val);
+            if (elementNode.left != null) q.add(elementNode.left);
+            if (elementNode.right != null) q.add(elementNode.right);
+        }
+        return ans;
+    }
+
+    protected List<List<T>> verticalOrder(BTree.BTreeNode<T> node) {
+        var map = new TreeMap<Integer, List<T>>();
+        verticalOrderHelper(node, map, 0);
+        return map.values().stream().toList();
+    }
+
+
+    private void verticalOrderHelper(BTree.BTreeNode<T> node, Map<Integer, List<T>> map, int scale) {
+        if (node == null) return;
+        if (!map.containsKey(scale)) map.put(scale, new ArrayList<>());
+        map.get(scale).add(node.val);
+        verticalOrderHelper(node.left, map, scale - 1);
+        verticalOrderHelper(node.right, map, scale + 1);
+
+    }
 
 
     public static void main(String[] args) {
@@ -106,5 +157,11 @@ public class BinaryTree<T> {
         System.out.println(tree.preOrder(root));
         System.out.println(tree.postOrder(root));
         System.out.println(tree.levelOrder(root));
+        System.out.println("Left view ->" + tree.leftView(root));
+        System.out.println("Right view ->" + tree.rightView(root));
+        System.out.println("Top view ->" + tree.topView(root));
+        System.out.println("Bottom view ->" + tree.bottomView(root));
+        System.out.println("Level order array ->" + tree.levelOrderArray(root));
+        System.out.println("Vertical Order ->" + tree.verticalOrder(root));
     }
 }

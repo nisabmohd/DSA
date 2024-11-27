@@ -20,4 +20,5 @@ public interface Maps<K, V> {
     public V remove(K key);
 
     public int size();
+
 }

@@ -117,5 +117,21 @@ public class BinarySearchTree<T extends Comparable<T>> extends BinaryTree<T> {
         return super.leftView(root);
     }
 
+    public List<T> topView() {
+        return super.topView(root);
+    }
+
+    public List<T> bottomView() {
+        return super.bottomView(root);
+    }
+
+    public List<T> levelOrderArray() {
+        return super.levelOrderArray(root);
+    }
+
+    public List<List<T>> verticalOrder() {
+        return super.verticalOrder(root);
+    }
+
 }
 

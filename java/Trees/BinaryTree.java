@@ -9,7 +9,7 @@ import java.util.Map;
 
 public class BinaryTree<T> {
 
-    public List<T> inOrder(BTree.BTreeNode<T> node) {
+    protected List<T> inOrder(BTree.BTreeNode<T> node) {
         List<T> ans = new ArrayList<>();
         if (node == null) return ans;
         ans.addAll(inOrder(node.left));
@@ -18,7 +18,7 @@ public class BinaryTree<T> {
         return ans;
     }
 
-    public List<T> preOrder(BTree.BTreeNode<T> node) {
+    protected List<T> preOrder(BTree.BTreeNode<T> node) {
         List<T> ans = new ArrayList<>();
         if (node == null) return ans;
         ans.add(node.val);
@@ -27,7 +27,7 @@ public class BinaryTree<T> {
         return ans;
     }
 
-    public List<T> postOrder(BTree.BTreeNode<T> node) {
+    protected List<T> postOrder(BTree.BTreeNode<T> node) {
         List<T> ans = new ArrayList<>();
         if (node == null) return ans;
         ans.addAll(postOrder(node.left));
@@ -36,7 +36,7 @@ public class BinaryTree<T> {
         return ans;
     }
 
-    public List<List<T>> levelOrder(BTree.BTreeNode<T> node) {
+    protected List<List<T>> levelOrder(BTree.BTreeNode<T> node) {
         Map<Integer, List<T>> map = new LinkedHashMap<>();
         levelOrderHelper(node, map, 0);
         return map.values().stream().toList();
@@ -52,7 +52,7 @@ public class BinaryTree<T> {
     }
 
     //   todo
-    //    public  List<T> levelOrderArray(BTreeNode<T> node);
+    //   height,levelOrderArray, leftview,rightview,topview,bottomview
 
 
     public static void main(String[] args) {

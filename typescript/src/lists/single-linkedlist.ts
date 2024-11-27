@@ -8,7 +8,7 @@ class SingleLinkedListNode<E> {
     }
 }
 
-class SingleLinkedList<T> {
+export default class SingleLinkedList<T> {
     private head: MayBeNull<SingleLinkedListNode<T>>;
     private tail: MayBeNull<SingleLinkedListNode<T>>;
     private internalSize: number;

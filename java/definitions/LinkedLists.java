@@ -1,6 +1,7 @@
 package definitions;
 
 public interface LinkedLists<T> {
+
     public void add(T val);
 
     public void add(int index, T val);

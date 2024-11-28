@@ -1,6 +1,6 @@
 package Maps;
 
-import definitions.BTree;
+import definitions.BTree.BTreeNode;
 import definitions.Maps;
 
 import java.util.Comparator;
@@ -18,7 +18,7 @@ public class TreeMap<K extends Comparable<K>, V> implements Maps<K, V> {
         }
     }
 
-    private BTree.BTreeNode<Entry<K, V>> root;
+    private BTreeNode<Entry<K, V>> root;
     private int size;
     private Comparator<K> comparator;
 
@@ -46,10 +46,10 @@ public class TreeMap<K extends Comparable<K>, V> implements Maps<K, V> {
     }
 
 
-    private BTree.BTreeNode<Entry<K, V>> put(Entry<K, V> entry, BTree.BTreeNode<Entry<K, V>> node) {
+    private BTreeNode<Entry<K, V>> put(Entry<K, V> entry, BTreeNode<Entry<K, V>> node) {
         if (node == null) {
             size++;
-            return new BTree.BTreeNode<>(entry);
+            return new BTreeNode<>(entry);
         }
         if (comparator.compare(node.val.key, entry.key) > 0) {
             size++;
@@ -72,7 +72,7 @@ public class TreeMap<K extends Comparable<K>, V> implements Maps<K, V> {
         return deletedEntry.val;
     }
 
-    private BTree.BTreeNode<Entry<K, V>> remove(K key, BTree.BTreeNode<Entry<K, V>> node) {
+    private BTreeNode<Entry<K, V>> remove(K key, BTreeNode<Entry<K, V>> node) {
         if (node == null) return null;
         if (comparator.compare(node.val.key, key) > 0) {
             node.left = remove(key, node.left);
@@ -100,7 +100,7 @@ public class TreeMap<K extends Comparable<K>, V> implements Maps<K, V> {
         }
     }
 
-    private Entry<K, V> getMin(BTree.BTreeNode<Entry<K, V>> node) {
+    private Entry<K, V> getMin(BTreeNode<Entry<K, V>> node) {
         var ans = node.val;
         while (node != null) {
             if (comparator.compare(node.val.key, ans.key) < 0) ans = node.val;
@@ -114,7 +114,7 @@ public class TreeMap<K extends Comparable<K>, V> implements Maps<K, V> {
         return get(key, root);
     }
 
-    private V get(K key, BTree.BTreeNode<Entry<K, V>> node) {
+    private V get(K key, BTreeNode<Entry<K, V>> node) {
         if (node == null) return null;
         if (node.val.key.equals(key)) return node.val.val;
         if (comparator.compare(node.val.key, key) > 0)
@@ -127,7 +127,7 @@ public class TreeMap<K extends Comparable<K>, V> implements Maps<K, V> {
         return containsValue(val, root);
     }
 
-    private boolean containsValue(V val, BTree.BTreeNode<Entry<K, V>> node) {
+    private boolean containsValue(V val, BTreeNode<Entry<K, V>> node) {
         if (node == null) return false;
         if (node.val.val.equals(val)) return true;
         var fromLeft = containsValue(val, node.left);

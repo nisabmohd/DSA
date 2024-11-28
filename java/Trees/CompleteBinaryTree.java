@@ -1,11 +1,11 @@
 package Trees;
 
-import definitions.BTree;
+import definitions.BTree.BTreeNode;
 
 import java.util.*;
 
 public class CompleteBinaryTree<T> extends BinaryTree<T> {
-    private ArrayList<BTree.BTreeNode<T>> list;
+    private ArrayList<BTreeNode<T>> list;
     private int size;
 
     public CompleteBinaryTree() {
@@ -23,7 +23,7 @@ public class CompleteBinaryTree<T> extends BinaryTree<T> {
     }
 
     public void add(T val) {
-        var node = new BTree.BTreeNode<>(val);
+        var node = new BTreeNode<>(val);
         if (isEmpty()) {
             list.add(size++, node);
             return;

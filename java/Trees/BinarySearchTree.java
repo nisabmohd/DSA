@@ -2,10 +2,10 @@ package Trees;
 
 import java.util.*;
 
-import definitions.BTree;
+import definitions.BTree.BTreeNode;
 
 public class BinarySearchTree<T extends Comparable<T>> extends BinaryTree<T> {
-    private BTree.BTreeNode<T> root;
+    private BTreeNode<T> root;
     private int size;
 
     public BinarySearchTree() {
@@ -18,10 +18,10 @@ public class BinarySearchTree<T extends Comparable<T>> extends BinaryTree<T> {
 
     }
 
-    private BTree.BTreeNode<T> add(T val, BTree.BTreeNode<T> node) {
+    private BTreeNode<T> add(T val, BTreeNode<T> node) {
         if (node == null) {
             size++;
-            return new BTree.BTreeNode<>(val);
+            return new BTreeNode<T>(val);
         }
         if (node.val.compareTo(val) > 0) {
             size++;
@@ -41,7 +41,7 @@ public class BinarySearchTree<T extends Comparable<T>> extends BinaryTree<T> {
         if (hasDeleted) size--;
     }
 
-    private T getMaxValue(BTree.BTreeNode<T> node) {
+    private T getMaxValue(BTreeNode<T> node) {
         var max = node.val;
         while (node != null) {
             if (node.val.compareTo(max) > 0) max = node.val;
@@ -50,7 +50,7 @@ public class BinarySearchTree<T extends Comparable<T>> extends BinaryTree<T> {
         return max;
     }
 
-    private BTree.BTreeNode<T> remove(T val, BTree.BTreeNode<T> node) {
+    private BTreeNode<T> remove(T val, BTreeNode<T> node) {
         if (node == null) return null;
         if (node.val.compareTo(val) > 0) {
             node.left = remove(val, node.left);
@@ -81,7 +81,7 @@ public class BinarySearchTree<T extends Comparable<T>> extends BinaryTree<T> {
         return contains(val, root);
     }
 
-    private boolean contains(T val, BTree.BTreeNode<T> node) {
+    private boolean contains(T val, BTreeNode<T> node) {
         if (node == null) return false;
         if (node.val.equals(val)) return true;
         if (node.val.compareTo(val) > 0) return contains(val, node.left);

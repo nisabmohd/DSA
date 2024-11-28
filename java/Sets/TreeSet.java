@@ -1,5 +1,5 @@
 package Sets;
 
 // todo
-public class TreeSet {
+public class TreeSet<T> {
 }

@@ -2,7 +2,6 @@ package Trees;
 
 import java.util.*;
 
-// todo
 public class PrefixTree {
     private class TrieNode {
         Map<Character, TrieNode> map = new HashMap<>();
@@ -21,38 +20,32 @@ public class PrefixTree {
         var temp = root;
         for (int i = 0; i < word.length(); i++) {
             var letter = word.charAt(i);
-            if (temp.map.containsKey(letter)) temp.map.put(letter, new TrieNode());
+            if (!temp.map.containsKey(letter)) temp.map.put(letter, new TrieNode());
             temp = temp.map.get(letter);
         }
         temp.isWordUntil = true;
+        count++;
     }
 
     public void removeWord(String word) {
         var temp = root;
         for (int i = 0; i < word.length(); i++) {
             var letter = word.charAt(i);
-            if (temp.map.containsKey(letter)) temp.map.put(letter, new TrieNode());
+            if (!temp.map.containsKey(letter)) return;
             temp = temp.map.get(letter);
         }
         temp.isWordUntil = false;
+        count--;
     }
 
     public boolean containsWord(String word) {
         var temp = root;
         for (int i = 0; i < word.length(); i++) {
             var letter = word.charAt(i);
-            if (temp.map.containsKey(letter)) temp.map.put(letter, new TrieNode());
+            if (!temp.map.containsKey(letter)) return false;
             temp = temp.map.get(letter);
         }
         return temp.isWordUntil;
-    }
-
-    public int countWords() {
-        return count;
-    }
-
-    public int countWords(String prefix) {
-        return 0;
     }
 
     public boolean hasPrefix(String prefix) {
@@ -65,6 +58,15 @@ public class PrefixTree {
         return true;
     }
 
+
+    public int countWords() {
+        return count;
+    }
+
+    public int countWords(String prefix) {
+        return getWordsWithPrefix(prefix).size();
+    }
+
     public List<String> getWordsWithPrefix(String prefix) {
         List<String> ans = new LinkedList<>();
         var temp = root;
@@ -73,13 +75,18 @@ public class PrefixTree {
             if (!temp.map.containsKey(letter)) return ans;
             temp = temp.map.get(letter);
         }
+        if (temp.isWordUntil) ans.add(prefix);
+        temp.map.forEach((k, v) -> {
+            helperGetWords(v, prefix + k, ans);
+        });
         return ans;
     }
 
-    private List<String> helperGetWords(TrieNode node, String prefix) {
-
-
-
-        return null;
+    private void helperGetWords(TrieNode node, String prefix, List<String> ans) {
+        if (node.isWordUntil) ans.add(prefix);
+        node.map.forEach((k, v) -> {
+            helperGetWords(v, prefix + k, ans);
+        });
     }
+
 }

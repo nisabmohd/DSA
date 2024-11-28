@@ -1,5 +1,5 @@
 package Sets;
 
 // todo
-public class LinkedHashSet {
+public class LinkedHashSet<T> {
 }

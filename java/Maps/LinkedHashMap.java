@@ -1,5 +1,5 @@
 package Maps;
 
 // todo
-public class LinkedHashMap {
+public class LinkedHashMap<K,V>{
 }

@@ -15,13 +15,21 @@ public class BinarySearchTree<T extends Comparable<T>> extends BinaryTree<T> {
 
     public void add(T val) {
         root = add(val, root);
-        size++;
+
     }
 
     private BTree.BTreeNode<T> add(T val, BTree.BTreeNode<T> node) {
-        if (node == null) return new BTree.BTreeNode<>(val);
-        if (node.val.compareTo(val) > 0) node.left = add(val, node.left);
-        else if (node.val.compareTo(val) < 0) node.right = add(val, node.right);
+        if (node == null) {
+            size++;
+            return new BTree.BTreeNode<>(val);
+        }
+        if (node.val.compareTo(val) > 0) {
+            size++;
+            node.left = add(val, node.left);
+        } else if (node.val.compareTo(val) < 0) {
+            size++;
+            node.right = add(val, node.right);
+        }
         return node;
     }
 

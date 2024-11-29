@@ -29,8 +29,7 @@ public class TreeMap<K extends Comparable<K>, V> implements Maps<K, V> {
     }
 
     public TreeMap(Comparator<K> comparator) {
-        root = null;
-        size = 0;
+        this();
         this.comparator = comparator;
     }
 

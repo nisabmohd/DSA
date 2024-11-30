@@ -1,5 +1,7 @@
 package definitions;
 
+import java.util.function.BiConsumer;
+
 public interface Maps<K, V> {
     public void clear();
 
@@ -20,5 +22,7 @@ public interface Maps<K, V> {
     public V remove(K key);
 
     public int size();
+
+    public void forEach(BiConsumer<K, V> consumer);
 
 }

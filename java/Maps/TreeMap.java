@@ -1,22 +1,24 @@
 package Maps;
 
+import Trees.BinaryTree;
 import definitions.BTree.BTreeNode;
 import definitions.Maps;
 
 import java.util.Comparator;
+import java.util.function.BiConsumer;
+
+class Entry<K, V> {
+    K key;
+    V val;
+
+    public Entry(K key, V val) {
+        this.key = key;
+        this.val = val;
+    }
+}
 
 // todo : optimise by using AVL_TREE
-public class TreeMap<K extends Comparable<K>, V> implements Maps<K, V> {
-
-    public class Entry<K, V> {
-        K key;
-        V val;
-
-        public Entry(K key, V val) {
-            this.key = key;
-            this.val = val;
-        }
-    }
+public class TreeMap<K extends Comparable<K>, V> extends BinaryTree<Entry<K, V>> implements Maps<K, V> {
 
     private BTreeNode<Entry<K, V>> root;
     private int size;
@@ -159,6 +161,13 @@ public class TreeMap<K extends Comparable<K>, V> implements Maps<K, V> {
     @Override
     public int size() {
         return size;
+    }
+
+    @Override
+    public void forEach(BiConsumer<K, V> consumer) {
+        super.inOrder(root).forEach(entry -> {
+            consumer.accept(entry.key, entry.val);
+        });
     }
 
 }

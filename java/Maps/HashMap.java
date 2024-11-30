@@ -2,6 +2,8 @@ package Maps;
 
 import definitions.Maps;
 
+import java.util.function.BiConsumer;
+
 public class HashMap<K, V> implements Maps<K, V> {
 
     public static class Entry<K, V> {
@@ -129,5 +131,15 @@ public class HashMap<K, V> implements Maps<K, V> {
     @Override
     public int size() {
         return size;
+    }
+
+    @Override
+    public void forEach(BiConsumer<K, V> consumer) {
+        for (var entryHead : bucket) {
+            while (entryHead != null) {
+                consumer.accept(entryHead.key, entryHead.val);
+                entryHead = entryHead.next;
+            }
+        }
     }
 }

@@ -6,7 +6,6 @@ import definitions.Sets;
 public class LinkedHashSet<T> implements Sets<T> {
 
     private LinkedHashMap<T, Object> map = new LinkedHashMap<T, Object>();
-    private Object garbage = null;
 
     @Override
     public void clear() {
@@ -15,7 +14,7 @@ public class LinkedHashSet<T> implements Sets<T> {
 
     @Override
     public void add(T val) {
-        map.put(val, garbage);
+        map.put(val, null);
     }
 
     @Override

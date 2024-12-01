@@ -5,6 +5,7 @@ import definitions.Queues;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
+import java.util.Objects;
 
 // Also known as PriorityQueue
 // Defaults to MinHeap
@@ -20,17 +21,21 @@ public class Heap<T extends Comparable<T>> implements Queues<T> {
 
     public Heap(Comparator<T> comparator) {
         this();
+        Objects.requireNonNull(comparator);
         this.comparator = comparator;
     }
 
     public Heap(Collection<T> data) {
         this();
+        Objects.requireNonNull(data);
         ArrayList<T> givenList = new ArrayList<>(data);
         buildHeap(givenList);
     }
 
     public Heap(Comparator<T> comparator, Collection<T> data) {
         this();
+        Objects.requireNonNull(data);
+        Objects.requireNonNull(comparator);
         this.comparator = comparator;
         ArrayList<T> givenList = new ArrayList<>(data);
         buildHeap(givenList);
@@ -110,7 +115,7 @@ public class Heap<T extends Comparable<T>> implements Queues<T> {
     }
 
     public String toString() {
-        return list.stream().skip(1).filter(item -> item != null).toList().toString();
+        return list.stream().skip(1).filter(Objects::nonNull).toList().toString();
     }
 
     private void buildHeap(ArrayList<T> givenArray) {

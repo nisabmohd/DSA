@@ -6,7 +6,6 @@ import definitions.Sets;
 public class HashSet<T> implements Sets<T> {
 
     private HashMap<T, Object> map = new HashMap<T, Object>();
-    private Object garbage = null;
 
     @Override
     public void clear() {
@@ -15,7 +14,7 @@ public class HashSet<T> implements Sets<T> {
 
     @Override
     public void add(T val) {
-        map.put(val, garbage);
+        map.put(val, null);
     }
 
     @Override

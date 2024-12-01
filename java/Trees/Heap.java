@@ -3,6 +3,7 @@ package Trees;
 import definitions.Queues;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Comparator;
 
 // Also known as PriorityQueue
@@ -22,17 +23,30 @@ public class Heap<T extends Comparable<T>> implements Queues<T> {
         this.comparator = comparator;
     }
 
+    public Heap(Collection<T> data) {
+        this();
+        ArrayList<T> givenList = new ArrayList<>(data);
+        buildHeap(givenList);
+    }
+
+    public Heap(Comparator<T> comparator, Collection<T> data) {
+        this();
+        this.comparator = comparator;
+        ArrayList<T> givenList = new ArrayList<>(data);
+        buildHeap(givenList);
+    }
+
     @Override
     public void add(T val) {
         list.add(size, val);
         var currentIndex = size;
         while (currentIndex > 1) {
-            var element = list.get(currentIndex);
+            var currentVal = list.get(currentIndex);
             var parentIndex = currentIndex / 2;
             var parentValue = list.get(parentIndex);
-            if (comparator.compare(parentValue, element) > 0) {
+            if (comparator.compare(parentValue, currentVal) > 0) {
                 list.set(currentIndex, parentValue);
-                list.set(parentIndex, element);
+                list.set(parentIndex, currentVal);
                 currentIndex = parentIndex;
             } else break;
         }
@@ -42,35 +56,31 @@ public class Heap<T extends Comparable<T>> implements Queues<T> {
     @Override
     public T remove() {
         if (isEmpty()) return null;
-        var removedValue = list.get(1);
+        T returnVal = list.get(1);
         size--;
-        var lastValue = list.get(size);
+        list.set(1, list.get(size));
         list.set(size, null);
-        if (size > 1) {
-            list.set(1, lastValue);
-        }
-        var currentIndex = 1;
-        int lastIndex = size - 1;
-        while (currentIndex < lastIndex) {
-            var leftChildIndex = 2 * currentIndex;
-            var rightChildIndex = (2 * currentIndex) + 1;
-            var leftChildValue = list.get(leftChildIndex);
-            var rightChildValue = list.get(rightChildIndex);
-            var currentVal = list.get(currentIndex);
-            var minValueIndex = currentIndex;
-            if (leftChildIndex < size && comparator.compare(leftChildValue, currentVal) < 0) {
-                minValueIndex = leftChildIndex;
+        int currentIndex = 1;
+        while (currentIndex < size) {
+            int leftIndex = 2 * currentIndex;
+            int rightIndex = (2 * currentIndex) + 1;
+            int minIndex = currentIndex;
+            if (leftIndex < size && comparator.compare(list.get(minIndex), list.get(leftIndex)) > 0) {
+                minIndex = leftIndex;
             }
-            if (rightChildIndex < size && comparator.compare(rightChildValue, currentVal) > 0) {
-                minValueIndex = rightChildIndex;
+            if (rightIndex < size && comparator.compare(list.get(minIndex), list.get(rightIndex)) > 0) {
+                minIndex = rightIndex;
             }
-            if (minValueIndex == currentIndex) break;
-            var minValue = list.get(minValueIndex);
-            list.set(minValueIndex, currentVal);
-            list.set(currentIndex, minValue);
-            currentIndex = minValueIndex;
+            if (minIndex != currentIndex) {
+                var minIndexValue = list.get(minIndex);
+                var currentIndexValue = list.get(currentIndex);
+                list.set(currentIndex, minIndexValue);
+                list.set(minIndex, currentIndexValue);
+                currentIndex = minIndex;
+            } else break;
         }
-        return removedValue;
+
+        return returnVal;
     }
 
     @Override
@@ -101,6 +111,35 @@ public class Heap<T extends Comparable<T>> implements Queues<T> {
 
     public String toString() {
         return list.stream().skip(1).filter(item -> item != null).toList().toString();
+    }
+
+    private void buildHeap(ArrayList<T> givenArray) {
+        list.addAll(givenArray);
+        size += givenArray.size();
+        for (int i = size() / 2; i > 0; i--) {
+            heapify(i);
+        }
+    }
+
+    private void heapify(int currentIndex) {
+        int leftIndex = currentIndex * 2;
+        int rightIndex = (currentIndex * 2) + 1;
+        var minIndex = currentIndex;
+        if (leftIndex < size - 1 &&
+                comparator.compare(list.get(minIndex), list.get(leftIndex)) > 0) {
+            minIndex = leftIndex;
+        }
+        if (rightIndex < size - 1 &&
+                comparator.compare(list.get(minIndex), list.get(rightIndex)) > 0) {
+            minIndex = rightIndex;
+        }
+        if (currentIndex != minIndex) {
+            var minIndexValue = list.get(minIndex);
+            var currentIndexValue = list.get(currentIndex);
+            list.set(currentIndex, minIndexValue);
+            list.set(minIndex, currentIndexValue);
+            heapify(minIndex);
+        }
     }
 
 }

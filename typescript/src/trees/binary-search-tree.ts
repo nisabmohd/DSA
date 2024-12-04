@@ -1,5 +1,5 @@
 import type { CompareFn } from "../util.ts";
-import { BinaryTree, BinaryTreeNode } from "./binarytree.ts";
+import { BinaryTree, BinaryTreeNode } from "./binary-tree.ts";
 
 export default class BinarySearchTree<T> extends BinaryTree<T> {
     private root: BinaryTreeNode<T> | null;

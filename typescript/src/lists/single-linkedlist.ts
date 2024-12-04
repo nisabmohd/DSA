@@ -1,3 +1,5 @@
+import { MayBeNull } from "../util.ts";
+
 class SingleLinkedListNode<E> {
     val: E;
     next: MayBeNull<SingleLinkedListNode<E>>;

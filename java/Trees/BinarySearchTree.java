@@ -65,7 +65,7 @@ public class BinarySearchTree<T extends Comparable<T>> extends BinaryTree<T> {
         } else if (node.left != null && node.right == null) {
             hasDeleted = true;
             return node.left;
-        } else if (node.left == null && node.right != null) {
+        } else if (node.left == null) {
             hasDeleted = true;
             return node.right;
         } else {
@@ -83,7 +83,7 @@ public class BinarySearchTree<T extends Comparable<T>> extends BinaryTree<T> {
 
     private boolean contains(T val, BTreeNode<T> node) {
         if (node == null) return false;
-        if (node.val.equals(val)) return true;
+        if (node.val.compareTo(val) == 0) return true;
         if (node.val.compareTo(val) > 0) return contains(val, node.left);
         else return contains(val, node.right);
     }

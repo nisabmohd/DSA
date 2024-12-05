@@ -14,7 +14,9 @@ public class BidirectionalGraph<T> implements Graphs<T> {
 
     @Override
     public void addEdge(T source, T destination) {
+        if (source == null) return;
         if (!adjMap.containsKey(source)) adjMap.put(source, new HashSet<>());
+        if (destination == null) return;
         if (!adjMap.containsKey(destination)) adjMap.put(destination, new HashSet<>());
         adjMap.get(source).add(destination);
         adjMap.get(destination).add(source);
@@ -22,9 +24,15 @@ public class BidirectionalGraph<T> implements Graphs<T> {
 
     @Override
     public void removeEdge(T source, T destination) {
-        if (!adjMap.containsKey(source) || !adjMap.containsKey(destination)) return;
-        adjMap.get(source).remove(destination);
-        adjMap.get(destination).remove(source);
+        if (!adjMap.containsKey(source)) return;
+        if (destination == null) {
+            this.adjMap.get(source).forEach((adjNode) -> {
+                this.adjMap.get(adjNode).remove(source);
+            });
+            this.adjMap.remove(source);
+            return;
+        }
+        this.adjMap.get(source).remove(destination);
     }
 
     @Override

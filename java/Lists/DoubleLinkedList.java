@@ -76,7 +76,7 @@ public class DoubleLinkedList<T> implements Iterable<T>, LinkedLists<T> {
     }
 
     private boolean isValidGetIndex(int index) {
-        return index > 0 && index < size;
+        return index >= 0 && index < size;
     }
 
     @Override
@@ -127,8 +127,7 @@ public class DoubleLinkedList<T> implements Iterable<T>, LinkedLists<T> {
             init(val);
             return;
         }
-        var node = new DoubleLinkedListNode<>(val, tail, null);
-        tail.next = node;
+        tail.next = new DoubleLinkedListNode<>(val, tail, null);
         size++;
         tail = tail.next;
     }
@@ -197,6 +196,7 @@ public class DoubleLinkedList<T> implements Iterable<T>, LinkedLists<T> {
     public T remove(int index) {
         if (isEmpty() || !isValidGetIndex(index)) return null;
         if (index == size - 1) return removeLast();
+        if (index == 0) return removeFirst();
         var temp = head;
         for (int i = 0; i < index; i++) {
             temp = temp.next;
@@ -204,8 +204,10 @@ public class DoubleLinkedList<T> implements Iterable<T>, LinkedLists<T> {
         var val = temp.val;
         var prev = temp.prev;
         var next = temp.next;
-        prev.next = next;
-        next.prev = prev;
+        if (prev != null)
+            prev.next = next;
+        if (next != null)
+            next.prev = prev;
         size--;
         return val;
     }
@@ -215,7 +217,9 @@ public class DoubleLinkedList<T> implements Iterable<T>, LinkedLists<T> {
         if (isEmpty()) return null;
         var val = head.val;
         head = head.next;
-        head.prev = null;
+        if (head != null)
+            head.prev = null;
+        else tail = null;
         size--;
         return val;
     }
@@ -225,7 +229,9 @@ public class DoubleLinkedList<T> implements Iterable<T>, LinkedLists<T> {
         if (isEmpty()) return null;
         var val = tail.val;
         tail = tail.prev;
-        tail.next = null;
+        if (tail != null)
+            tail.next = null;
+        else head = null;
         size--;
         return val;
     }

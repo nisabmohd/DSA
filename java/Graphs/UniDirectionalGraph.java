@@ -14,7 +14,9 @@ public class UniDirectionalGraph<T> implements Graphs<T> {
 
     @Override
     public void addEdge(T source, T destination) {
+        if (source == null) return;
         if (!adjMap.containsKey(source)) adjMap.put(source, new HashSet<>());
+        if (destination == null) return;
         if (!adjMap.containsKey(destination)) adjMap.put(destination, new HashSet<>());
         adjMap.get(source).add(destination);
     }
@@ -22,6 +24,15 @@ public class UniDirectionalGraph<T> implements Graphs<T> {
     @Override
     public void removeEdge(T source, T destination) {
         if (!adjMap.containsKey(source)) return;
+        if (destination == null) {
+            this.adjMap.forEach((k, v) -> {
+                if (k.equals(source)) {
+                    v.remove(source);
+                }
+            });
+            this.adjMap.remove(source);
+            return;
+        }
         adjMap.get(source).remove(destination);
     }
 

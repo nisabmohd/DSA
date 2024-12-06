@@ -58,7 +58,9 @@ export default class DoubleLinkedList<T> {
   }
 
   public add(val: T, index?: number) {
-    if (!index) return this.addLast(val);
+    index ??= this.size;
+    if (!this.isValidAddIndex(index)) return;
+    if (index == this.size) return this.addLast(val);
     if (index == 0) return this.addFirst(val);
     let temp = this.head;
     while (index - 1 > 0) {

@@ -32,16 +32,16 @@ export default class CompleteBinaryTree<T> extends BinaryTree<T> {
     return lastNode.val;
   }
 
-  public override inOrder(node: BinaryTreeNode<T> | null): T[] {
-    return super.inOrder(node);
+  public override inOrder(): T[] {
+    return super.inOrder(this.arr[1]);
   }
 
-  public override preOrder(node: BinaryTreeNode<T> | null): T[] {
-    return super.preOrder(node);
+  public override preOrder(): T[] {
+    return super.preOrder(this.arr[1]);
   }
 
-  public override postOrder(node: BinaryTreeNode<T> | null): T[] {
-    return super.postOrder(node);
+  public override postOrder(): T[] {
+    return super.postOrder(this.arr[1]);
   }
 
   // can add more functions and use parent utility like postOrder,preOrder etc...

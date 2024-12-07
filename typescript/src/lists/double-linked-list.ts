@@ -153,6 +153,15 @@ export default class DoubleLinkedList<T> {
     temp!.val = val;
   }
 
+  public includes(val: T) {
+    let temp = this.head;
+    while (temp != null) {
+      if (val == temp!.val) return true;
+      temp = temp!.next;
+    }
+    return false;
+  }
+
   public clear() {
     this.head = null;
     this.tail = null;

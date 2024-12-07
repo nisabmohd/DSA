@@ -53,14 +53,19 @@ public class BidirectionalGraph<T> implements Graphs<T> {
 
     private List<T> breadthFirstSearch(T source, Set<T> vis) {
         List<T> ans = new LinkedList<>();
+        var queueLookup = new HashSet<>();
         if (!adjMap.containsKey(source)) return ans;
         Queue<T> q = new LinkedList<>();
         q.add(source);
+        queueLookup.add(source);
         while (!q.isEmpty()) {
             var node = q.remove();
             vis.add(node);
             adjMap.get(node).forEach(adjNode -> {
-                if (!vis.contains(adjNode)) q.add(adjNode);
+                if (!vis.contains(adjNode) && !queueLookup.contains(adjNode)) {
+                    q.add(adjNode);
+                    queueLookup.add(adjNode);
+                }
             });
             ans.add(node);
         }

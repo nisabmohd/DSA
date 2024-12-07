@@ -101,15 +101,47 @@ export default class BinarySearchTree<T> extends BinaryTree<T> {
     return this.hasHelper(val, node.right);
   }
 
-  public override inOrder(node: BinaryTreeNode<T> | null): T[] {
-    return super.inOrder(node);
+  public override inOrder(): T[] {
+    return super.inOrder(this.root);
   }
 
-  public override preOrder(node: BinaryTreeNode<T> | null): T[] {
-    return super.preOrder(node);
+  public override preOrder(): T[] {
+    return super.preOrder(this.root);
   }
 
-  public override postOrder(node: BinaryTreeNode<T> | null): T[] {
-    return super.postOrder(node);
+  public override postOrder(): T[] {
+    return super.postOrder(this.root);
+  }
+
+  public override levelOrder() {
+    return super.levelOrder(this.root);
+  }
+
+  public override height() {
+    return super.height(this.root);
+  }
+
+  public override rightView() {
+    return super.rightView(this.root);
+  }
+
+  public overrideleftView() {
+    return super.leftView(this.root);
+  }
+
+  public override topView() {
+    return super.topView(this.root);
+  }
+
+  public override bottomView() {
+    return super.bottomView(this.root);
+  }
+
+  public override levelOrderArray() {
+    return super.levelOrderArray(this.root);
+  }
+
+  public override verticalOrder() {
+    return super.verticalOrder(this.root);
   }
 }

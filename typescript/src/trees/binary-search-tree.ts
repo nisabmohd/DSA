@@ -36,7 +36,7 @@ export default class BinarySearchTree<T> extends BinaryTree<T> {
 
   public remove(val: T) {
     this.hasDeleted = false;
-    this.root = this.addHelper(val, this.root);
+    this.root = this.removeHelper(val, this.root);
     if (this.hasDeleted) this.elements--;
   }
 
@@ -144,4 +144,6 @@ export default class BinarySearchTree<T> extends BinaryTree<T> {
   public override verticalOrder() {
     return super.verticalOrder(this.root);
   }
+
+  //  add includes
 }

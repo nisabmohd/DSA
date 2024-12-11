@@ -1,6 +1,6 @@
 package Trees;
 
-public class AVL_Tree<T extends Comparable<T>>{
+public class AVL_Tree<T extends Comparable<T>> {
     private static class AVLTreeNode<E> {
         int height;
         E val;

@@ -1,4 +1,5 @@
 import Queue from "../queues/queue.ts";
+import { AvlTreeNode } from "./avl-tree.ts";
 
 export class BinaryTreeNode<T> {
   val: T;
@@ -12,13 +13,15 @@ export class BinaryTreeNode<T> {
   }
 }
 
+type BinaryTreeNodes<T> = BinaryTreeNode<T> | AvlTreeNode<T> | null;
+
 export class BinaryTree<T> {
-  public height(node: BinaryTreeNode<T> | null): number {
+  public height(node: BinaryTreeNodes<T>): number {
     if (node == null) return 0;
     return Math.max(this.height(node.left), this.height(node.right)) + 1;
   }
 
-  public inOrder(node: BinaryTreeNode<T> | null) {
+  public inOrder(node: BinaryTreeNodes<T>) {
     const ans: T[] = [];
     if (!node) return ans;
     ans.push(...this.inOrder(node!.left));
@@ -27,7 +30,7 @@ export class BinaryTree<T> {
     return ans;
   }
 
-  public preOrder(node: BinaryTreeNode<T> | null) {
+  public preOrder(node: BinaryTreeNodes<T>) {
     const ans: T[] = [];
     if (!node) return ans;
     ans.push(node.val);
@@ -36,7 +39,7 @@ export class BinaryTree<T> {
     return ans;
   }
 
-  public postOrder(node: BinaryTreeNode<T> | null) {
+  public postOrder(node: BinaryTreeNodes<T>) {
     const ans: T[] = [];
     if (!node) return ans;
     ans.push(...this.postOrder(node!.left));
@@ -45,14 +48,14 @@ export class BinaryTree<T> {
     return ans;
   }
 
-  public levelOrder(node: BinaryTreeNode<T> | null) {
+  public levelOrder(node: BinaryTreeNodes<T>) {
     const map = new Map<number, T[]>();
     this.levelOrderHelper(node, map, 0);
     return [...map.values()];
   }
 
   private levelOrderHelper(
-    node: BinaryTreeNode<T> | null,
+    node: BinaryTreeNodes<T>,
     levelMap: Map<number, T[]>,
     level: number,
   ) {
@@ -63,7 +66,7 @@ export class BinaryTree<T> {
     this.levelOrderHelper(node.right, levelMap, level + 1);
   }
 
-  public levelOrderArray(node: BinaryTreeNode<T> | null) {
+  public levelOrderArray(node: BinaryTreeNodes<T>) {
     const ans: T[] = [];
     if (node == null) return ans;
     const q = new Queue<BinaryTreeNode<T>>();
@@ -80,7 +83,7 @@ export class BinaryTree<T> {
   }
 
   public leftView(
-    node: BinaryTreeNode<T> | null,
+    node: BinaryTreeNodes<T>,
   ) {
     const map = new Map<number, T>();
     this.leftViewHelper(node, map, 0);
@@ -88,7 +91,7 @@ export class BinaryTree<T> {
   }
 
   private leftViewHelper(
-    node: BinaryTreeNode<T> | null,
+    node: BinaryTreeNodes<T>,
     map: Map<number, T>,
     level: number,
   ) {
@@ -98,14 +101,14 @@ export class BinaryTree<T> {
     this.leftViewHelper(node.right, map, level + 1);
   }
 
-  public rightView(node: BinaryTreeNode<T> | null) {
+  public rightView(node: BinaryTreeNodes<T>) {
     const map = new Map<number, T>();
     this.rightViewHelper(node, map, 0);
     return [...map.values()];
   }
 
   private rightViewHelper(
-    node: BinaryTreeNode<T> | null,
+    node: BinaryTreeNodes<T>,
     map: Map<number, T>,
     level: number,
   ) {
@@ -115,7 +118,7 @@ export class BinaryTree<T> {
     this.leftViewHelper(node.right, map, level + 1);
   }
 
-  public topView(node: BinaryTreeNode<T> | null) {
+  public topView(node: BinaryTreeNodes<T>) {
     const map = new Map<number, T>();
     this.topViewHelper(node, 0, map);
     return map.entries().toArray().sort((a, b) => a[0] - b[0]).map((it) =>
@@ -124,7 +127,7 @@ export class BinaryTree<T> {
   }
 
   private topViewHelper(
-    node: BinaryTreeNode<T> | null,
+    node: BinaryTreeNodes<T>,
     scale: number,
     map: Map<number, T>,
   ) {
@@ -134,7 +137,7 @@ export class BinaryTree<T> {
     this.topViewHelper(node.right, scale + 1, map);
   }
 
-  public bottomView(node: BinaryTreeNode<T> | null) {
+  public bottomView(node: BinaryTreeNodes<T>) {
     const map = new Map<number, T>();
     this.bottomViewHelper(node, 0, map);
     return map.entries().toArray().sort((a, b) => a[0] - b[0]).map((it) =>
@@ -143,7 +146,7 @@ export class BinaryTree<T> {
   }
 
   private bottomViewHelper(
-    node: BinaryTreeNode<T> | null,
+    node: BinaryTreeNodes<T>,
     scale: number,
     map: Map<number, T>,
   ) {
@@ -153,7 +156,7 @@ export class BinaryTree<T> {
     this.topViewHelper(node.right, scale + 1, map);
   }
 
-  public verticalOrder(node: BinaryTreeNode<T> | null) {
+  public verticalOrder(node: BinaryTreeNodes<T>) {
     const map = new Map<number, T[]>();
     this.verticalOrderHelper(node, 0, map);
     return map.entries().toArray().sort((a, b) => a[0] - b[0]).map((it) =>
@@ -162,7 +165,7 @@ export class BinaryTree<T> {
   }
 
   private verticalOrderHelper(
-    node: BinaryTreeNode<T> | null,
+    node: BinaryTreeNodes<T>,
     scale: number,
     map: Map<number, T[]>,
   ) {

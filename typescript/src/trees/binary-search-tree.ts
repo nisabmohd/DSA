@@ -145,5 +145,14 @@ export default class BinarySearchTree<T> extends BinaryTree<T> {
     return super.verticalOrder(this.root);
   }
 
-  //  add includes
+  public includes(val: T) {
+    return this.includesHelper(val, this.root);
+  }
+
+  private includesHelper(val: T, node: BinaryTreeNode<T> | null): boolean {
+    if (node == null) return false;
+    if (this.compareFn(val, node.val) == 0) return true;
+    if (this.includesHelper(val, node.left)) return true;
+    return this.includesHelper(val, node.right);
+  }
 }

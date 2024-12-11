@@ -1,6 +1,10 @@
 package Trees;
 
-public class AVL_Tree<T extends Comparable<T>> {
+import definitions.BTree;
+
+import java.util.List;
+
+public class AVL_Tree<T extends Comparable<T>> extends BinaryTree<T> {
     private static class AVLTreeNode<E> {
         int height;
         E val;
@@ -88,7 +92,7 @@ public class AVL_Tree<T extends Comparable<T>> {
             }
             return rightRotate(node);
         }
-        if (balanceFactor < 1) {
+        if (balanceFactor < -1) {
             if (getBalanceFactor(node.right) > 0) {
                 node.right = rightRotate(node.right);
             }
@@ -143,6 +147,14 @@ public class AVL_Tree<T extends Comparable<T>> {
 
     public int size() {
         return size;
+    }
+
+    private BTree.BTreeNode<T> convert(AVLTreeNode<T> node) {
+        return root == null ? null : new BTree.BTreeNode<>(root.val);
+    }
+
+    public List<T> inOrder() {
+        return super.inOrder(convert(root));
     }
 
 }

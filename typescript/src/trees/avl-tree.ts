@@ -111,7 +111,7 @@ export default class AvlTree<T> extends BinaryTree<T> {
       }
       return this.rightRotate(node)!;
     }
-    if (balanaceFactor < 1) {
+    if (balanaceFactor < -1) {
       if (this.getBalanceFactor(node.right) > 0) {
         node.right = this.leftRotate(node.right)!;
       }
@@ -152,6 +152,17 @@ export default class AvlTree<T> extends BinaryTree<T> {
 
   public override postOrder(): T[] {
     return super.postOrder(this.root);
+  }
+
+  public includes(val: T) {
+    return this.includesHelper(val, this.root);
+  }
+
+  private includesHelper(val: T, node: AvlTreeNode<T> | null): boolean {
+    if (node == null) return false;
+    if (this.compareFn(val, node.val) == 0) return true;
+    if (this.includesHelper(val, node.left)) return true;
+    return this.includesHelper(val, node.right);
   }
 
   // can add more functions and use parent utility like postOrder,preOrder etc...

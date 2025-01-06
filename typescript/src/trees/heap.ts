@@ -1,4 +1,4 @@
-import type { CompareFn } from "../util.ts";
+import type {CompareFn} from "../util.ts";
 
 type Data<T> = T | null;
 
@@ -39,8 +39,7 @@ export default class Heap<T> {
     }
     if (minIndex != currentIndex) {
       const minValue = this.arr[minIndex];
-      const currentValue = this.arr[currentIndex];
-      this.arr[minIndex] = currentValue;
+      this.arr[minIndex] = this.arr[currentIndex];
       this.arr[currentIndex] = minValue;
       currentIndex = minIndex;
       this.heapify(currentIndex);
@@ -81,8 +80,7 @@ export default class Heap<T> {
       this.arr.pop();
       return removedValue;
     }
-    const lastValue = this.arr.pop()!;
-    this.arr[1] = lastValue;
+    this.arr[1] = this.arr.pop()!;
     let currentIndex = 1;
     while (currentIndex <= this.size) {
       const leftIndex = currentIndex * 2;
@@ -108,8 +106,7 @@ export default class Heap<T> {
       }
       if (minIndex != currentIndex) {
         const minValue = this.arr[minIndex];
-        const currentValue = this.arr[currentIndex];
-        this.arr[minIndex] = currentValue;
+        this.arr[minIndex] = this.arr[currentIndex];
         this.arr[currentIndex] = minValue;
         currentIndex = minIndex;
       } else break;

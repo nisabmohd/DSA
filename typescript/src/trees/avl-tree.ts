@@ -18,7 +18,7 @@ export class AvlTreeNode<T> {
 export default class AvlTree<T> extends BinaryTree<T> {
   private root: AvlTreeNode<T> | null;
   private count: number;
-  private compareFn: CompareFn<T>;
+  private readonly compareFn: CompareFn<T>;
 
   public constructor(compareFn: CompareFn<T>) {
     super();
@@ -113,7 +113,7 @@ export default class AvlTree<T> extends BinaryTree<T> {
     }
     if (balanaceFactor < -1) {
       if (this.getBalanceFactor(node.right) > 0) {
-        node.right = this.leftRotate(node.right)!;
+        node.right = this.rightRotate(node.right)!;
       }
       return this.leftRotate(node)!;
     }

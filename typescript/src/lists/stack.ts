@@ -2,7 +2,7 @@ import DoubleLinkedList from "./double-linked-list.ts";
 
 export default class Stack<E> {
   private list: DoubleLinkedList<E>;
-  private maxCapacity: number;
+  private readonly maxCapacity: number;
 
   constructor(maxCapacity: number = -1) {
     this.list = new DoubleLinkedList();

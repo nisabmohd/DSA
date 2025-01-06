@@ -1,10 +1,10 @@
-import type { CompareFn } from "../util.ts";
-import { BinaryTree, BinaryTreeNode } from "./binary-tree.ts";
+import type {CompareFn} from "../util.ts";
+import {BinaryTree, BinaryTreeNode} from "./binary-tree.ts";
 
 export default class BinarySearchTree<T> extends BinaryTree<T> {
   private root: BinaryTreeNode<T> | null;
   private elements: number;
-  private compareFn: CompareFn<T>;
+  private readonly compareFn: CompareFn<T>;
 
   public constructor(compare: CompareFn<T>) {
     super();
@@ -62,8 +62,7 @@ export default class BinarySearchTree<T> extends BinaryTree<T> {
         this.hasDeleted = true;
         return node.right;
       } else {
-        const minValue = this.getMin(node.right);
-        node.val = minValue;
+        node.val = this.getMin(node.right);
         this.hasDeleted = true;
         node.right = this.removeHelper(val, node.right);
         return node;
@@ -125,7 +124,7 @@ export default class BinarySearchTree<T> extends BinaryTree<T> {
     return super.rightView(this.root);
   }
 
-  public overrideleftView() {
+  public override leftView() {
     return super.leftView(this.root);
   }
 

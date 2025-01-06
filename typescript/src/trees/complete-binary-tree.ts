@@ -1,7 +1,7 @@
 import { BinaryTree, BinaryTreeNode } from "./binary-tree.ts";
 
 export default class CompleteBinaryTree<T> extends BinaryTree<T> {
-  private arr: (BinaryTreeNode<T> | null)[];
+  private readonly arr: (BinaryTreeNode<T> | null)[];
 
   public constructor() {
     super();

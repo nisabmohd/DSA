@@ -1,6 +1,6 @@
 export default class CircularQueue<T> {
   private arr: T[];
-  private arrSize: number;
+  private readonly arrSize: number;
   private count: number;
 
   private rear: number;

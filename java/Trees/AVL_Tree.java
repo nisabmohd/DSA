@@ -2,9 +2,11 @@ package Trees;
 
 import definitions.BTree;
 
+import java.util.Comparator;
 import java.util.List;
 
-public class AVL_Tree<T extends Comparable<T>> extends BinaryTree<T> {
+public class AVL_Tree<T> extends BinaryTree<T> {
+
     private static class AVLTreeNode<E> {
         int height;
         E val;
@@ -18,6 +20,7 @@ public class AVL_Tree<T extends Comparable<T>> extends BinaryTree<T> {
 
     private AVLTreeNode<T> root;
     private int size;
+    private final Comparator<T> comparator;
 
 
     public void clear() {
@@ -27,6 +30,22 @@ public class AVL_Tree<T extends Comparable<T>> extends BinaryTree<T> {
 
     public AVL_Tree() {
         clear();
+        comparator = getDefaultComparator();
+    }
+
+    public AVL_Tree(Comparator<T> c) {
+        clear();
+        this.comparator = c;
+    }
+
+    @SuppressWarnings("unchecked")
+    private Comparator<T> getDefaultComparator() {
+        return (a, b) -> {
+            if(a instanceof Comparable<?> && b instanceof Comparable<?>){
+                return ((Comparable<T>) a).compareTo(b);
+            }
+            throw new IllegalArgumentException("Objects are not comparable, and no custom comparator provided.");
+        };
     }
 
     public void add(T val) {
@@ -38,9 +57,9 @@ public class AVL_Tree<T extends Comparable<T>> extends BinaryTree<T> {
             size++;
             return new AVLTreeNode<>(val);
         }
-        if (node.val.compareTo(val) > 0) {
+        if (comparator.compare(node.val, val) > 0) {
             node.left = add(val, node.left);
-        } else if (node.val.compareTo(val) < 0) {
+        } else if (comparator.compare(node.val, val) < 0) {
             node.right = add(val, node.right);
         } else return node;
         updateHeight(node);
@@ -58,9 +77,9 @@ public class AVL_Tree<T extends Comparable<T>> extends BinaryTree<T> {
 
     private AVLTreeNode<T> remove(T val, AVLTreeNode<T> node) {
         if (node == null) return null;
-        if (node.val.compareTo(val) > 0) {
+        if (comparator.compare(node.val, val) > 0) {
             node.left = remove(val, node.left);
-        } else if (node.val.compareTo(val) < 0) {
+        } else if (comparator.compare(node.val, val) < 0) {
             node.right = remove(val, node.right);
         } else {
             hasDeleted = true;
@@ -77,7 +96,7 @@ public class AVL_Tree<T extends Comparable<T>> extends BinaryTree<T> {
     private T getMaxValue(AVLTreeNode<T> node) {
         var max = node.val;
         while (node != null) {
-            if (node.val.compareTo(max) > 0) max = node.val;
+            if (comparator.compare(node.val, max) > 0) max = node.val;
             node = node.right;
         }
         return max;
@@ -140,8 +159,8 @@ public class AVL_Tree<T extends Comparable<T>> extends BinaryTree<T> {
 
     private boolean contains(T val, AVLTreeNode<T> node) {
         if (node == null) return false;
-        if (node.val.compareTo(val) == 0) return true;
-        if (node.val.compareTo(val) > 0) return contains(val, node.left);
+        if (comparator.compare(node.val, val) == 0) return true;
+        if (comparator.compare(node.val, val) > 0) return contains(val, node.left);
         else return contains(val, node.right);
     }
 
@@ -150,7 +169,7 @@ public class AVL_Tree<T extends Comparable<T>> extends BinaryTree<T> {
     }
 
     private BTree.BTreeNode<T> convert(AVLTreeNode<T> node) {
-        return root == null ? null : new BTree.BTreeNode<>(root.val);
+        return node == null ? null : new BTree.BTreeNode<>(node.val);
     }
 
     public List<T> inOrder() {

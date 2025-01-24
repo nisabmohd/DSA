@@ -6,19 +6,16 @@ import definitions.Sets;
 import java.util.Comparator;
 import java.util.Objects;
 
-public class TreeSet<T extends Comparable<T>> implements Sets<T> {
+public class TreeSet<T> implements Sets<T> {
 
-    private TreeMap<T, Object> map;
-    private Comparator<T> comparator;
+    private final TreeMap<T, Object> map;
 
     public TreeSet() {
-        this.comparator = Comparable::compareTo;
-        map = new TreeMap<T, Object>(comparator);
+        map = new TreeMap<T, Object>();
     }
 
     public TreeSet(Comparator<T> comparator) {
         Objects.requireNonNull(comparator);
-        this.comparator = comparator;
         map = new TreeMap<T, Object>(comparator);
     }
 

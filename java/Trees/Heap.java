@@ -9,14 +9,14 @@ import java.util.Objects;
 
 // Also known as PriorityQueue
 // Defaults to MinHeap
-public class Heap<T extends Comparable<T>> implements Queues<T> {
+public class Heap<T> implements Queues<T> {
     private Comparator<T> comparator;
     private int size;
     private ArrayList<T> list;
 
     public Heap() {
         init();
-        this.comparator = Comparable::compareTo;
+        this.comparator = getDefaultComparator();
     }
 
     public Heap(Comparator<T> comparator) {
@@ -39,6 +39,16 @@ public class Heap<T extends Comparable<T>> implements Queues<T> {
         this.comparator = comparator;
         ArrayList<T> givenList = new ArrayList<>(data);
         buildHeap(givenList);
+    }
+
+    @SuppressWarnings("unchecked")
+    private Comparator<T> getDefaultComparator() {
+        return (a, b) -> {
+            if (a instanceof Comparable<?> && b instanceof Comparable<?>) {
+                return ((Comparable<T>) a).compareTo(b);
+            }
+            throw new IllegalArgumentException("Objects are not comparable, and no custom comparator provided.");
+        };
     }
 
     @Override

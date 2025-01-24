@@ -4,13 +4,34 @@ import java.util.*;
 
 import definitions.BTree.BTreeNode;
 
-public class BinarySearchTree<T extends Comparable<T>> extends BinaryTree<T> {
+public class BinarySearchTree<T> extends BinaryTree<T> {
     private BTreeNode<T> root;
     private int size;
+    private final Comparator<T> comparator;
 
-    public BinarySearchTree() {
+    private void init() {
         size = 0;
         root = null;
+    }
+
+    public BinarySearchTree() {
+        init();
+        comparator = getDefaultComparator();
+    }
+
+    public BinarySearchTree(Comparator<T> c) {
+        init();
+        comparator = c;
+    }
+
+    @SuppressWarnings("unchecked")
+    private Comparator<T> getDefaultComparator() {
+        return (a, b) -> {
+            if (a instanceof Comparable<?> && b instanceof Comparable<?>) {
+                return ((Comparable<T>) a).compareTo(b);
+            }
+            throw new IllegalArgumentException("Objects are not comparable, and no custom comparator provided.");
+        };
     }
 
     public void add(T val) {
@@ -23,10 +44,10 @@ public class BinarySearchTree<T extends Comparable<T>> extends BinaryTree<T> {
             size++;
             return new BTreeNode<T>(val);
         }
-        if (node.val.compareTo(val) > 0) {
+        if (comparator.compare(node.val, val) > 0) {
             size++;
             node.left = add(val, node.left);
-        } else if (node.val.compareTo(val) < 0) {
+        } else if (comparator.compare(node.val, val) < 0) {
             size++;
             node.right = add(val, node.right);
         }
@@ -44,7 +65,7 @@ public class BinarySearchTree<T extends Comparable<T>> extends BinaryTree<T> {
     private T getMaxValue(BTreeNode<T> node) {
         var max = node.val;
         while (node != null) {
-            if (node.val.compareTo(max) > 0) max = node.val;
+            if (comparator.compare(node.val, max) > 0) max = node.val;
             node = node.right;
         }
         return max;
@@ -52,10 +73,10 @@ public class BinarySearchTree<T extends Comparable<T>> extends BinaryTree<T> {
 
     private BTreeNode<T> remove(T val, BTreeNode<T> node) {
         if (node == null) return null;
-        if (node.val.compareTo(val) > 0) {
+        if (comparator.compare(node.val, val) > 0) {
             node.left = remove(val, node.left);
             return node;
-        } else if (node.val.compareTo(val) < 0) {
+        } else if (comparator.compare(node.val, val) < 0) {
             node.right = remove(val, node.right);
             return node;
         }
@@ -83,8 +104,8 @@ public class BinarySearchTree<T extends Comparable<T>> extends BinaryTree<T> {
 
     private boolean contains(T val, BTreeNode<T> node) {
         if (node == null) return false;
-        if (node.val.compareTo(val) == 0) return true;
-        if (node.val.compareTo(val) > 0) return contains(val, node.left);
+        if (comparator.compare(node.val, val) == 0) return true;
+        if (comparator.compare(node.val, val) > 0) return contains(val, node.left);
         else return contains(val, node.right);
     }
 

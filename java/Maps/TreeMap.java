@@ -18,7 +18,7 @@ class Entry<K, V> {
 }
 
 // todo : optimise by using AVL_TREE
-public class TreeMap<K extends Comparable<K>, V> extends BinaryTree<Entry<K, V>> implements Maps<K, V> {
+public class TreeMap<K, V> extends BinaryTree<Entry<K, V>> implements Maps<K, V> {
 
     private BTreeNode<Entry<K, V>> root;
     private int size;
@@ -27,12 +27,22 @@ public class TreeMap<K extends Comparable<K>, V> extends BinaryTree<Entry<K, V>>
     public TreeMap() {
         root = null;
         size = 0;
-        this.comparator = Comparable::compareTo;
+        this.comparator = getDefaultComparator();
     }
 
     public TreeMap(Comparator<K> comparator) {
         this();
         this.comparator = comparator;
+    }
+
+    @SuppressWarnings("unchecked")
+    private Comparator<K> getDefaultComparator() {
+        return (a, b) -> {
+            if (a instanceof Comparable<?> && b instanceof Comparable<?>) {
+                return ((Comparable<K>) a).compareTo(b);
+            }
+            throw new IllegalArgumentException("Objects are not comparable, and no custom comparator provided.");
+        };
     }
 
     @Override
@@ -88,7 +98,7 @@ public class TreeMap<K extends Comparable<K>, V> extends BinaryTree<Entry<K, V>>
             } else if (node.left != null && node.right == null) {
                 if (deletedEntry == null) deletedEntry = node.val;
                 return node.left;
-            } else if (node.left == null && node.right != null) {
+            } else if (node.left == null) {
                 if (deletedEntry == null) deletedEntry = node.val;
                 return node.right;
             } else {

@@ -1,5 +1,6 @@
 package Trees;
 
+import definitions.IncomparableException;
 import definitions.Queues;
 
 import java.util.ArrayList;
@@ -47,7 +48,7 @@ public class Heap<T> implements Queues<T> {
             if (a instanceof Comparable<?> && b instanceof Comparable<?>) {
                 return ((Comparable<T>) a).compareTo(b);
             }
-            throw new IllegalArgumentException("Objects are not comparable, and no custom comparator provided.");
+            throw new IncomparableException("Provided Object is not comparable, and no custom comparator provided.");
         };
     }
 

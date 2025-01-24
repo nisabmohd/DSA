@@ -1,6 +1,7 @@
 package Trees;
 
 import definitions.BTree;
+import definitions.IncomparableException;
 
 import java.util.Comparator;
 import java.util.List;
@@ -41,10 +42,10 @@ public class AVL_Tree<T> extends BinaryTree<T> {
     @SuppressWarnings("unchecked")
     private Comparator<T> getDefaultComparator() {
         return (a, b) -> {
-            if(a instanceof Comparable<?> && b instanceof Comparable<?>){
+            if (a instanceof Comparable<?> && b instanceof Comparable<?>) {
                 return ((Comparable<T>) a).compareTo(b);
             }
-            throw new IllegalArgumentException("Objects are not comparable, and no custom comparator provided.");
+            throw new IncomparableException("Provided Object is not comparable, and no custom comparator provided.");
         };
     }
 

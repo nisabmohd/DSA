@@ -2,6 +2,7 @@ package Maps;
 
 import Trees.BinaryTree;
 import definitions.BTree.BTreeNode;
+import definitions.IncomparableException;
 import definitions.Maps;
 
 import java.util.Comparator;
@@ -41,7 +42,7 @@ public class TreeMap<K, V> extends BinaryTree<Entry<K, V>> implements Maps<K, V>
             if (a instanceof Comparable<?> && b instanceof Comparable<?>) {
                 return ((Comparable<K>) a).compareTo(b);
             }
-            throw new IllegalArgumentException("Objects are not comparable, and no custom comparator provided.");
+            throw new IncomparableException("Provided Object is not comparable, and no custom comparator provided.");
         };
     }
 

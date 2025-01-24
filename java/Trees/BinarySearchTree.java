@@ -3,7 +3,6 @@ package Trees;
 import java.util.*;
 
 import definitions.BTree.BTreeNode;
-import definitions.IncomparableException;
 
 public class BinarySearchTree<T> extends BinaryTree<T> {
     private BTreeNode<T> root;
@@ -17,7 +16,7 @@ public class BinarySearchTree<T> extends BinaryTree<T> {
 
     public BinarySearchTree() {
         init();
-        comparator = getDefaultComparator();
+        comparator = this.getObjectComparator();
     }
 
     public BinarySearchTree(Comparator<T> c) {
@@ -26,13 +25,8 @@ public class BinarySearchTree<T> extends BinaryTree<T> {
     }
 
     @SuppressWarnings("unchecked")
-    private Comparator<T> getDefaultComparator() {
-        return (a, b) -> {
-            if (a instanceof Comparable<?> && b instanceof Comparable<?>) {
-                return ((Comparable<T>) a).compareTo(b);
-            }
-            throw new IncomparableException("Provided Object is not comparable, and no custom comparator provided.");
-        };
+    private Comparator<T> getObjectComparator() {
+        return (a, b) -> ((Comparable<T>) a).compareTo(b);
     }
 
     public void add(T val) {

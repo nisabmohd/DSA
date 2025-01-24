@@ -2,7 +2,6 @@ package Maps;
 
 import Trees.BinaryTree;
 import definitions.BTree.BTreeNode;
-import definitions.IncomparableException;
 import definitions.Maps;
 
 import java.util.Comparator;
@@ -23,27 +22,26 @@ public class TreeMap<K, V> extends BinaryTree<Entry<K, V>> implements Maps<K, V>
 
     private BTreeNode<Entry<K, V>> root;
     private int size;
-    private Comparator<K> comparator;
+    private final Comparator<K> comparator;
 
-    public TreeMap() {
+    private void init() {
         root = null;
         size = 0;
-        this.comparator = getDefaultComparator();
+    }
+
+    public TreeMap() {
+        init();
+        comparator = getObjectKeyComparator();
     }
 
     public TreeMap(Comparator<K> comparator) {
-        this();
+        init();
         this.comparator = comparator;
     }
 
     @SuppressWarnings("unchecked")
-    private Comparator<K> getDefaultComparator() {
-        return (a, b) -> {
-            if (a instanceof Comparable<?> && b instanceof Comparable<?>) {
-                return ((Comparable<K>) a).compareTo(b);
-            }
-            throw new IncomparableException("Provided Object is not comparable, and no custom comparator provided.");
-        };
+    private Comparator<K> getObjectKeyComparator() {
+        return (a, b) -> ((Comparable<K>) a).compareTo(b);
     }
 
     @Override

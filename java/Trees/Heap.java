@@ -1,27 +1,23 @@
 package Trees;
 
-import definitions.IncomparableException;
 import definitions.Queues;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Comparator;
-import java.util.Objects;
+import java.util.*;
 
 // Also known as PriorityQueue
 // Defaults to MinHeap
 public class Heap<T> implements Queues<T> {
-    private Comparator<T> comparator;
+    private final Comparator<T> comparator;
     private int size;
     private ArrayList<T> list;
 
     public Heap() {
         init();
-        this.comparator = getDefaultComparator();
+        comparator = getObjectComparator();
     }
 
     public Heap(Comparator<T> comparator) {
-        this();
+        init();
         Objects.requireNonNull(comparator);
         this.comparator = comparator;
     }
@@ -34,7 +30,7 @@ public class Heap<T> implements Queues<T> {
     }
 
     public Heap(Comparator<T> comparator, Collection<T> data) {
-        this();
+        init();
         Objects.requireNonNull(data);
         Objects.requireNonNull(comparator);
         this.comparator = comparator;
@@ -43,13 +39,8 @@ public class Heap<T> implements Queues<T> {
     }
 
     @SuppressWarnings("unchecked")
-    private Comparator<T> getDefaultComparator() {
-        return (a, b) -> {
-            if (a instanceof Comparable<?> && b instanceof Comparable<?>) {
-                return ((Comparable<T>) a).compareTo(b);
-            }
-            throw new IncomparableException("Provided Object is not comparable, and no custom comparator provided.");
-        };
+    private Comparator<T> getObjectComparator() {
+        return (a, b) -> ((Comparable<T>) a).compareTo(b);
     }
 
     @Override

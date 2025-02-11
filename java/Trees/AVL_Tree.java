@@ -63,7 +63,6 @@ public class AVL_Tree<T> extends BinaryTree<T> {
 
     private boolean hasDeleted = false;
 
-
     public void remove(T val) {
         hasDeleted = false;
         root = remove(val, root);

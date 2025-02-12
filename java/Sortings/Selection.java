@@ -4,8 +4,8 @@ import java.util.Comparator;
 
 public class Selection {
     private static <T> int selectElement(T[] arr, int min, int max, Comparator<T> c) {
-        int index = 0;
-        for (int i = min; i <= max; i++) {
+        int index = min;
+        for (int i = min + 1; i <= max; i++) {
             if (c.compare(arr[i], arr[index]) > 0) index = i;
         }
         return index;
